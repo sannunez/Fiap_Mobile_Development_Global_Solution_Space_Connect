@@ -1,4 +1,4 @@
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, StyleSheet, Pressable, Text, Image } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import { useTheme } from "../hooks/useTheme";
 import { ForecastWeek } from "../types/ForecastWeek";
@@ -45,15 +45,23 @@ export default function BarCharComp({data} : BarCharProps){
 
     return(
         <View style={styles.chartCard}>
-            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
+            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center", marginTop: 5, marginBottom: 5}}>
                 <Pressable onPress={prevMetric}>
-                    <Text>Menos</Text>
+                    <Image
+                        source={require("../assets/images/arrow-prev.png")}
+                        resizeMode="contain"
+                        style={{width: 30, height: 30}}
+                    />
                 </Pressable>
 
-                    <Text>{currentMetric.label}</Text>
+                    <Text style={{fontSize: 18, fontWeight: 500}}>{currentMetric.label}</Text>
 
                 <Pressable onPress={nextMetric}>
-                    <Text>Mais</Text>
+                    <Image
+                        source={require("../assets/images/arrow-next.png")}
+                        resizeMode="contain"
+                        style={{width: 30, height: 30}}
+                    />
                 </Pressable>
             </View>
             <BarChart
