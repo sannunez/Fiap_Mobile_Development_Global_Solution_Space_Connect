@@ -1,9 +1,9 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
-import HomeScreen from '../screens/HomeScreen';
-import ListScreen from '../screens/ListScreen';
-import FavoritesScreen from '../screens/FavoritesScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import HomeScreen from '../screens/Home/HomeScreen';
+import ListScreen from '../screens/List/ListScreen';
+import FavoritesScreen from '../screens/Favorites/FavoritesScreen';
+import SettingsScreen from '../screens/Settings/SettingsScreen';
 
 import { useTheme } from '../hooks/useTheme';
 

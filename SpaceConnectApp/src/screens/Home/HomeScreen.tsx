@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 
-import BarCharComp from "../components/barchart";
-import DayChart from "../components/dayChart";
+import BarCharComp from "../../components/barchart";
+import DayChart from "../../components/dayChart";
 
-import { useTheme } from "../hooks/useTheme";
-import { forecastNextSevenDays, getCurrentDay } from "../services/weatherService";
-import { searchLocation } from "../services/geocodingService";
+import { useTheme } from "../../hooks/useTheme";
+import { forecastNextSevenDays, getCurrentDay } from "../../services/weatherService";
+import { searchLocation } from "../../services/geocodingService";
 
-import { loadWeather, saveWeather } from "../storage/weatherServiceStorage";
+import { loadWeather, saveWeather } from "../../storage/weatherServiceStorage";
 
 export default function HomeScreen() {
     const { theme } = useTheme();

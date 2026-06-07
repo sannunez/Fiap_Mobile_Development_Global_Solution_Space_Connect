@@ -1,5 +1,5 @@
 import {View, Text, Switch, Pressable} from 'react-native'
-import { useTheme } from '../hooks/useTheme'
+import { useTheme } from '../../hooks/useTheme'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SettingsScreen(){
