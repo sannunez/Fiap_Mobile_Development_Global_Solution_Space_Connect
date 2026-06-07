@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getCurrentWeather(latitude: number,longitude: number){
+export async function forecastNextSevenDays(latitude: number,longitude: number){
 
     const response = await axios.get("https://api.open-meteo.com/v1/forecast",
         {
@@ -34,4 +34,44 @@ export async function getCurrentWeather(latitude: number,longitude: number){
         })
     );
 }
+
+export async function getCurrentDay(latitude: number,longitude: number){
+
+    const response = await axios.get("https://api.open-meteo.com/v1/forecast",
+        {
+            params: {
+                latitude,
+                longitude,
+                current: [
+                    "temperature_2m",
+                    "relative_humidity_2m",
+                    "precipitation",
+                    "wind_speed_10m",
+                    "is_day"
+                ].join(",")
+            },
+        }
+    )
+    
+    return {
+    date: response.data.current.time.split("T")[0],
+
+    temperature:
+        response.data.current.temperature_2m,
+
+    humidity:
+        response.data.current.relative_humidity_2m,
+
+    precipitation:
+        response.data.current.precipitation,
+
+    wind:
+        response.data.current.wind_speed_10m,
+
+    is_day:
+        response.data.current.is_day,
+};
+            
+}
+
 

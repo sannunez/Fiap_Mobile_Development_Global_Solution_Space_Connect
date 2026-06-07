@@ -1,4 +1,4 @@
-export type ForecastDay = {
+export type ForecastWeek = {
     date: string;
     maxTemp: number;
     minTemp: number;

@@ -1,19 +1,40 @@
-import {useEffect, useState} from 'react'
-import {View, Text, TextInput, Pressable, FlatList, ScrollView} from 'react-native'
+import { useState, useEffect } from "react";
+import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 
-import BarCharComp from '../components/barchart'
+import BarCharComp from "../components/barchart";
+import DayChart from "../components/dayChart";
 
-import { useTheme } from '../hooks/useTheme'
+import { useTheme } from "../hooks/useTheme";
+import { forecastNextSevenDays, getCurrentDay } from "../services/weatherService";
+import { searchLocation } from "../services/geocodingService";
 
-import { getCurrentWeather } from '../services/weatherService'
-import { searchLocation } from '../services/geocodingService';
+import { loadWeather, saveWeather } from "../storage/weatherServiceStorage";
 
-export default function HomeScreen(){
-    const {darkMode, toggleTheme, theme} = useTheme();
+export default function HomeScreen() {
+    const { theme } = useTheme();
+
+    const [hasCache, setHasCache] = useState<boolean | null>(null);
 
     const [location, setLocation] = useState("");
     const [forecast, setForecast] = useState<any[]>([]);
+    const [currentDay, setCurrentDay] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        async function loadCacheOnStart() {
+            const cached = await loadWeather("last-weather");
+
+            if (cached) {
+                setForecast(cached.forecast);
+                setCurrentDay(cached.currentDay);
+                setHasCache(true);
+            } else {
+                setHasCache(false);
+            }
+        }
+
+        loadCacheOnStart();
+    }, []);
 
     async function getGeoLoc() {
         try {
@@ -21,96 +42,80 @@ export default function HomeScreen(){
 
             const geoData = await searchLocation(location);
 
-            const weatherData = await getCurrentWeather(
+            const forecastData = await forecastNextSevenDays(
                 geoData.latitude,
                 geoData.longitude
             );
 
-            setForecast(weatherData);
-        }
-        catch(error){
+            const currentDayData = await getCurrentDay(
+                geoData.latitude,
+                geoData.longitude
+            );
+
+            await saveWeather("last-weather", {
+                forecast: forecastData,
+                currentDay: currentDayData,
+            });
+
+            setForecast(forecastData);
+            setCurrentDay(currentDayData);
+            setHasCache(true);
+
+        } catch (error) {
             console.log(error);
-        }
-        finally{
+        } finally {
             setLoading(false);
         }
     }
 
-
-
-    if(!forecast.length){
-        return(
-            <View style = {{
-                    display: 'flex',
-                    flex: 1,
-                    backgroundColor:  theme.background,
-                    alignItems: 'center'
-                }}>
-
-                <TextInput
-                    placeholder='Digite sua cidade...'
-                    value={location}
-                    onChangeText={setLocation}
-                ></TextInput>
-
-                <Pressable
-                    onPress={getGeoLoc}
-                >
-                    <Text style={{color: theme.text}}>Dados Climáticos</Text>
-                </Pressable>
-                
-            </View>
-        )
+    // LOADING INICIAL (checa cache)
+    if (hasCache === null) {
+        return <View />;
     }
 
-    return(
-        <ScrollView contentInsetAdjustmentBehavior='automatic'>
-            <View
-                style = {{
-                    display: 'flex',
-                    flex: 1,
-                    backgroundColor:  theme.background,
-                    alignItems: 'center'
-                }}
-            >
+    // TELA DE BUSCA (sem cache)
+    if (!hasCache) {
+        return (
+            <View style={{
+                flex: 1,
+                backgroundColor: theme.background,
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+                <TextInput
+                    placeholder="Digite sua cidade..."
+                    value={location}
+                    onChangeText={setLocation}
+                />
 
-                <View>
-                    <BarCharComp data={forecast}/>
-                </View>
-                {/* <View>
-                    <FlatList
-                        data={forecast}
-                        keyExtractor={(item) => item.date}
-                        renderItem={({item}) => (
-                            <View>
-                                <Text style={{color: theme.text}}>
-                                    {item.date}
-                                </Text>
-                                
-                                <Text style={{color: theme.text}}>
-                                    {item.maxTemp}°C
-                                </Text>
+                <Pressable onPress={getGeoLoc}>
+                    <Text style={{ color: theme.text }}>
+                        {loading ? "Carregando..." : "Buscar clima"}
+                    </Text>
+                </Pressable>
+            </View>
+        );
+    }
 
-                                <Text style={{color: theme.text}}>
-                                    {item.minTemp}°C
-                                </Text>
-                                
-                                <Text style={{color: theme.text}}>
-                                    {item.rainChance}%
-                                </Text>
+    // HOME (cache)
+    return (
+        <ScrollView>
+            <View style={{
+                flex: 1,
+                backgroundColor: theme.background,
+                alignItems: "center"
+            }}>
 
-                                <Text style={{color: theme.text}}>
-                                    {item.precipitation} mm
-                                </Text>
-
-                                <Text style={{color: theme.text}}>
-                                    {item.wind} km/h
-                                </Text>
-                            </View>
-                        )}
+                {currentDay && (
+                    <DayChart
+                        data={currentDay}
+                        rainChance={forecast?.[0]?.rainChance ?? 0}
                     />
-                </View> */}
+                )}
+
+                <BarCharComp data={forecast} />
+
             </View>
         </ScrollView>
-    )
+    );
 }

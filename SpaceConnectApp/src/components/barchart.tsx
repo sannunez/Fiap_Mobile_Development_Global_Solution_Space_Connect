@@ -1,12 +1,11 @@
 import { View, StyleSheet } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import { useTheme } from "../hooks/useTheme";
-import { getCurrentWeather } from "../services/weatherService";
-import { ForecastDay } from "../types/ForecastDay";
+import { ForecastWeek } from "../types/ForecastWeek";
 
 
 type BarCharProps = {
-    data: ForecastDay[]
+    data: ForecastWeek[]
 };
 
 export default function BarCharComp({data} : BarCharProps){
