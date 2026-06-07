@@ -16,6 +16,7 @@ export default function HomeScreen() {
     const [hasCache, setHasCache] = useState<boolean | null>(null);
 
     const [location, setLocation] = useState("");
+    const [locationName, setLocationName] = useState("");
     const [forecast, setForecast] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState<any>(null);
     const [loading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ export default function HomeScreen() {
             if (cached) {
                 setForecast(cached.forecast);
                 setCurrentDay(cached.currentDay);
+                setLocationName(cached.locationName); 
                 setHasCache(true);
             } else {
                 setHasCache(false);
@@ -41,6 +43,7 @@ export default function HomeScreen() {
             setLoading(true);
 
             const geoData = await searchLocation(location);
+            setLocationName(geoData.name);
 
             const forecastData = await forecastNextSevenDays(
                 geoData.latitude,
@@ -55,6 +58,7 @@ export default function HomeScreen() {
             await saveWeather("last-weather", {
                 forecast: forecastData,
                 currentDay: currentDayData,
+                locationName: geoData.name
             });
 
             setForecast(forecastData);
@@ -103,13 +107,15 @@ export default function HomeScreen() {
             <View style={{
                 flex: 1,
                 backgroundColor: theme.background,
-                alignItems: "center"
+                alignItems: "center",
+                gap: 10
             }}>
 
                 {currentDay && (
                     <DayChart
                         data={currentDay}
                         rainChance={forecast?.[0]?.rainChance ?? 0}
+                        location={locationName}
                     />
                 )}
 

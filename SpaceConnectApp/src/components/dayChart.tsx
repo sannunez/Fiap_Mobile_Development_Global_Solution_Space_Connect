@@ -1,16 +1,17 @@
 import { View, StyleSheet, Text, Image } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 import { CurrentDay } from "../types/CurrentDay"
-import { ForecastWeek } from "../types/ForecastWeek";
 import { PieChart } from "react-native-gifted-charts";
+import { useState, useEffect } from "react";
 
 
 type dayChartProps = {
     data: CurrentDay;
     rainChance: number;
+    location: string
 }
 
-export default function DayChart({data, rainChance} : dayChartProps){
+export default function DayChart({data, rainChance, location} : dayChartProps){
     const {darkMode, toggleTheme, theme} = useTheme();
 
     const [year, month, day] = data.date.split("-");
@@ -35,16 +36,38 @@ export default function DayChart({data, rainChance} : dayChartProps){
         },
     ];
     
+    const messages = [
+        "Temperatura MUITO BAIXA: busque se aquecer imediatamente.",
+        "Temperatura relativamente baixa: um agasalho e bebida quente caem bem.",
+        "Temperatura agradavel: temperatura ideal.",
+        "Temperatura relativamente alta: mantenha-se hidratado e use protetor solar.",
+        "Temperatura MUITO ALTA: busque se abrigar imediatamente em local arejado, evite contato direto com a luz do sol."
+    ];
+
+    const message =
+    data.temperature <= 9
+        ? messages[0]
+        : data.temperature <= 17
+        ? messages[1]
+        : data.temperature <= 22
+        ? messages[2]
+        : data.temperature <= 28
+        ? messages[3]
+        : messages[4];
+
+
     return(
         <View style={{
                 backgroundColor: theme.background, 
                 width: '100%',
                 height: 150,
                 padding: 15,
+                marginBottom: 15,
+
                 }}>
 
             <View style={{display: 'flex', alignItems: 'center'}}>
-                <Text style={{fontSize: 18, marginBottom: 2, fontWeight: 500, color: "gray"}}>{formattedDate}</Text>
+                <Text style={{fontSize: 18, marginBottom: 2, fontWeight: 500, color: "gray"}}>{location} - {formattedDate}</Text>
             </View>
 
             <View style={{
@@ -64,16 +87,7 @@ export default function DayChart({data, rainChance} : dayChartProps){
                     gap: 10, 
                     
                 }}>
-                    {/* <View>
-                        <Text style={{color: "gray", fontWeight: 400, fontSize: 32, includeFontPadding: false}}>
-                            {day}
-                        </Text>
-                        <View style={{width: 35, height: 4, backgroundColor: "gray", borderRadius: 2}}/>
-                        <Text style={{color: "gray", fontWeight: 400, fontSize: 32, includeFontPadding: false}}>
-                            {month}
-                        </Text>
-                    </View> */}
-
+                    
                     <Image
                         source={
                             isDay
@@ -118,6 +132,11 @@ export default function DayChart({data, rainChance} : dayChartProps){
                     </View>
                 </View>
                 
+            </View>
+            <View style={{display: 'flex', alignItems: 'center'}}>
+                <Text style={{fontSize: 12, marginTop:5 ,fontWeight: 400, color: "gray", fontStyle: "italic", textAlign: "center"}}>
+                    {message}
+                </Text>
             </View>
         </View>
     )
