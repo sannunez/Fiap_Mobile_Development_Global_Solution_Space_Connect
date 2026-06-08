@@ -44,7 +44,25 @@ export default function BarCharComp({data} : BarCharProps){
 
 
     return(
-        <View style={styles.chartCard}>
+        <View style={{
+            backgroundColor: theme.card,
+            borderRadius: 12,
+ 
+
+            shadowColor: "#000",
+                shadowOffset: {
+                width: 0,
+                height: 4,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+
+            elevation: 5,
+
+            overflow: 'hidden'
+            
+            }}>
+
             <View style={{display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center", marginTop: 5, marginBottom: 5}}>
                 <Pressable onPress={prevMetric}>
                     <Image
@@ -54,7 +72,7 @@ export default function BarCharComp({data} : BarCharProps){
                     />
                 </Pressable>
 
-                    <Text style={{fontSize: 18, fontWeight: 500}}>{currentMetric.label}</Text>
+                    <Text style={{fontSize: 18, fontWeight: 500, color: theme.text}}>{currentMetric.label}</Text>
 
                 <Pressable onPress={nextMetric}>
                     <Image
@@ -90,6 +108,7 @@ export default function BarCharComp({data} : BarCharProps){
                 topLabelTextStyle={{
                     color: "gray"
                 }}
+
             />
         </View>
     )

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 
-import BarCharComp from "../../components/barchart";
-import DayChart from "../../components/dayChart";
+import BarCharComp from "../../components/Barchart";
+import DayChart from "../../components/DayChart";
 
 import { useTheme } from "../../hooks/useTheme";
 
@@ -30,12 +30,15 @@ export default function HomeScreen() {
     }, []);
 
     return (
-        <ScrollView>
-            <View style={{
+        <ScrollView
+            style={{
                 flex: 1,
                 backgroundColor: theme.background,
+            }}
+        >
+            <View style={{
                 alignItems: "center",
-                gap: 10
+                gap: 10,
             }}>
 
                 {currentDay && (

@@ -12,5 +12,9 @@ export async function searchLocation(cityName: string){
         }
     );
 
+    if (!response.data.results?.length) {
+        return null;
+    }
+    
     return response.data.results[0];
 }
