@@ -21,7 +21,7 @@ const icons = {
         active: require("../assets/images/calendar-active.png"),
         inactive: require("../assets/images/calendar.png"),
     },
-    Favorites: {
+    Favoritos: {
         active: require("../assets/images/favorite-active.png"),
         inactive: require("../assets/images/favorite.png"),
     },
@@ -92,7 +92,7 @@ export default function AppNavigator() {
         >
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Semana" component={ListScreen} />
-            <Tab.Screen name="Favorites" component={FavoritesScreen} />
+            <Tab.Screen name="Favoritos" component={FavoritesScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
     );

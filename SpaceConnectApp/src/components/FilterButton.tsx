@@ -14,7 +14,7 @@ export default function FilterButton({title,active,onPress, }: FilterButtonProps
         <Pressable
             onPress={onPress}
             style={{
-                width:  300,
+                width:  320,
                 paddingHorizontal: 8,
                 paddingVertical: 8,
                 borderRadius: 10,

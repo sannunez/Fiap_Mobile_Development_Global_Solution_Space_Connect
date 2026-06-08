@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, FlatList, Text } from "react-native";
 
 import BarCharComp from "../../components/Barchart";
 import DayChart from "../../components/DayChart";
+import EarthNewsCard from "../../components/EarthNewscard";
 
 import { useTheme } from "../../hooks/useTheme";
 
 import { loadWeather, saveWeather } from "../../storage/weatherServiceStorage";
+
+import { getEarthNews } from "../../services/eonetService";
+import { EarthNews } from "../../types/EarthNews";
 
 export default function HomeScreen() {
     const { theme } = useTheme();
@@ -14,6 +18,8 @@ export default function HomeScreen() {
     const [locationName, setLocationName] = useState("");
     const [forecast, setForecast] = useState<any[]>([]);
     const [currentDay, setCurrentDay] = useState<any>(null);
+
+    const [news, setNews] = useState<EarthNews[]>([]);
 
     useEffect(() => {
         async function loadCache() {
@@ -29,6 +35,19 @@ export default function HomeScreen() {
         loadCache();
     }, []);
 
+    useEffect(() => {
+
+    async function loadNews() {
+
+        const response = await getEarthNews();
+
+        setNews(response);
+
+    }
+
+    loadNews();
+
+    }, []);
     return (
         <ScrollView
             style={{
@@ -51,6 +70,41 @@ export default function HomeScreen() {
 
                 <BarCharComp data={forecast} />
 
+            </View>
+            <View style={{
+                margin: 10
+            }}>
+
+                <Text style={{
+                    color: "gray",
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    marginTop: 10
+                }}>Ocorrendo no mundo:</Text>
+
+                <View
+                    style={{
+                    height: 170,
+                    }}
+                >
+
+                <FlatList
+                    horizontal
+                    data={news}
+                    keyExtractor={(item) => item.id}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item }) => (
+                        <EarthNewsCard news={item} />
+                    )}
+                />
+                </View>
+                
+                <Text style={{
+                    width: "100%",
+                    color: "gray",
+                    fontSize: 14,
+                    textAlign: "right"
+                }}>Fonte: EONET API - NASA</Text>
             </View>
         </ScrollView>
     );

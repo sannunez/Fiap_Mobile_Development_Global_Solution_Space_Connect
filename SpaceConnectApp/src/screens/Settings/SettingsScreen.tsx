@@ -1,17 +1,34 @@
-import {View, Text, Switch, Pressable} from 'react-native'
+import {View, Text, Switch, Pressable, Alert} from 'react-native'
 import { useTheme } from '../../hooks/useTheme'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SettingsScreen(){
     const {darkMode, toggleTheme, theme} = useTheme();
-    
-    async function clearPreferences() {
-        try {
-            await AsyncStorage.clear();
-            console.log("Preferências removidas");
-        } catch (error) {
-            console.log("Erro ao limpar cache", error);
-        }
+
+    function confirmClearPreferences() {
+        Alert.alert(
+            "Confirmar ação",
+            "Você tem certeza?\n\nAo confirmar, você concorda em limpar dados salvos como:\n- Cidade analisada\n- Notícias salvas\n- Tema (Light/Dark)",
+
+            [
+            {
+                text: "Cancelar",
+                style: "cancel",
+            },
+            {
+                text: "Confirmar",
+                style: "destructive",
+                onPress: async () => {
+                try {
+                    await AsyncStorage.clear();
+                    console.log("Preferências removidas");
+                } catch (error) {
+                    console.log("Erro ao limpar cache", error);
+                }
+                },
+            },
+            ]
+        );
     }
 
     return(
@@ -20,25 +37,38 @@ export default function SettingsScreen(){
                 display: 'flex',
                 flex: 1,
                 backgroundColor: theme.background,
+                paddingHorizontal: 10
             }}
         >
-            <Text
+            <View
                 style={{
-                color: theme.text,
-                fontSize: 20,
-                marginBottom: 20,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
                 }}
             >
-                Dark Mode
-            </Text>
+                <Text
+                    style={{
+                    color: theme.text,
+                    fontSize: 16,
+                    }}
+                >
+                    {darkMode ? " Definir para Light Mode" : " Definir para Dark Mode"}
+                </Text>
 
-            <Switch
-                value={darkMode}
-                onValueChange={toggleTheme}
-            />
+                <Switch
+                    value={darkMode}
+                    onValueChange={toggleTheme}
+                />
+            </View>
 
-            <View>
-                <Pressable onPress={clearPreferences}>
+            <View 
+                style={{
+                    marginLeft: 10
+                }}
+            >
+                <Pressable onPress={confirmClearPreferences}>
                     <Text>Limpar preferências</Text>
                 </Pressable>
             </View>

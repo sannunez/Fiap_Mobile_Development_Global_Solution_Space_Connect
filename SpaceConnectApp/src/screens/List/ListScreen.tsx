@@ -129,7 +129,7 @@ export default function ListScreen() {
                                     elevation: 5,
                                 }}
                             />
-                            <Pressable style={{ marginInline: 30 }}
+                            <Pressable style={{ marginInline: 10 }}
                                 onPress={hiddenOrders}
                             >
                                 <Text style={{
@@ -144,7 +144,7 @@ export default function ListScreen() {
                             {showOrder && (
                                 <View
                                     style={{
-                                        marginInline: 30,
+                                        marginInline: 20,
                                         backgroundColor: theme.card,
                                         borderRadius: 10,
                                         padding: 5
@@ -153,7 +153,7 @@ export default function ListScreen() {
 
                                     <View>
                                         <FilterButton
-                                            title="🌡️ Temp"
+                                            title="🌡️ Temperatura"
                                             active={sortBy === "maxTemp"}
                                             onPress={() => setSortBy("maxTemp")}
                                         />
@@ -172,7 +172,7 @@ export default function ListScreen() {
                                     </View>
                                 </View>
                             )}
-                            <Pressable style={{ marginInline: 30 }}
+                            <Pressable style={{ marginInline: 10 }}
                                 onPress={hiddenFilters}
                             >
                                 <Text style={{
@@ -185,7 +185,7 @@ export default function ListScreen() {
                             {showFilter && (
                                 <View
                                     style={{
-                                        marginInline: 30,
+                                        marginInline: 20,
                                         backgroundColor: theme.card,
                                         borderRadius: 10,
                                         padding: 5

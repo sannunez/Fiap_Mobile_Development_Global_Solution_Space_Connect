@@ -3,4 +3,5 @@ export const darkTheme = {
     card: "#292929",
     text: "#FFFFFF",
     primary: "#3B82F6",
+    gradiente: "#316881"
 };
