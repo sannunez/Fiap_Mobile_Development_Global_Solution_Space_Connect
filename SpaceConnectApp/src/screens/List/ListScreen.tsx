@@ -114,7 +114,7 @@ export default function ListScreen() {
                                 style={{
                                     width: 350,
                                     margin: 10,
-                                    backgroundColor: "#f5f5f5",
+                                    backgroundColor: theme.card,
                                     borderRadius: 8,
                                     paddingHorizontal: 10,
                                     paddingVertical: 8,

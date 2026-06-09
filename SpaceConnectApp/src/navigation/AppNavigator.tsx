@@ -8,7 +8,7 @@ import FavoritesScreen from "../screens/Favorites/FavoritesScreen";
 import SettingsScreen from "../screens/Settings/SettingsScreen";
 
 import { useTheme } from "../hooks/useTheme";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "../hooks/useUser";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +65,7 @@ export default function AppNavigator() {
                 headerStyle: {
                     backgroundColor: theme.card,
                 },
-                
+
                 headerTintColor: theme.text,
                 headerTitleAlign: "center",
                 headerTitle: username

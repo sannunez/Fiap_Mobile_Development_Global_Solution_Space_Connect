@@ -8,7 +8,7 @@ import { EarthNews } from "../../types/EarthNews";
 import { getFavorites } from "../../services/favoriteNewsService";
 import {getUserPreferences,} from "../../services/userPreferencesService";
 import { useTheme } from "../../hooks/useTheme";
-import { useUser } from "../../contexts/UserContext";
+import { useUser } from "../../hooks/useUser";
 
 export default function FavoritesScreen() {
 
@@ -69,9 +69,7 @@ export default function FavoritesScreen() {
               await AsyncStorage.clear();
 
               setFavorites([]);
-
               setUsername("");
-
               setTreatment("Sr.");
 
               Alert.alert(
@@ -102,20 +100,13 @@ export default function FavoritesScreen() {
         const favoritesData =
           await getFavorites();
 
-        setFavorites(
-          favoritesData
-        );
+        setFavorites(favoritesData);
 
-        const preferences =
-          await getUserPreferences();
+        const preferences = await getUserPreferences();
 
-        setUsername(
-          preferences.username
-        );
+        setUsername(preferences.username);
 
-        setTreatment(
-          preferences.treatment
-        );
+        setTreatment(preferences.treatment);
 
       }
 
@@ -142,18 +133,12 @@ export default function FavoritesScreen() {
         }}
       >
 
-        {/* PERFIL */}
-
         <View
           style={{
             padding: 15,
-
             borderRadius: 10,
-
             marginBottom: 15,
-
-            backgroundColor:
-              theme.card,
+            backgroundColor: theme.card,
           }}
         >
 
@@ -235,43 +220,29 @@ export default function FavoritesScreen() {
           <TextInput
             value={username}
 
-            onChangeText={
-              setUsername
-            }
+            onChangeText={setUsername}
 
             placeholder="Digite seu nome"
-
             placeholderTextColor="gray"
 
             style={{
               borderWidth: 1,
-
               borderColor: "gray",
-
               borderRadius: 8,
-
               padding: 10,
-
               color: theme.text,
             }}
           />
 
           <Pressable
-            onPress={
-              handleSaveProfile
-            }
+            onPress={handleSaveProfile}
 
             style={{
               marginTop: 15,
-
               padding: 12,
-
               borderRadius: 8,
-
               alignItems: "center",
-
-              backgroundColor:
-                theme.gradiente,
+              backgroundColor:theme.gradiente,
             }}
           >
 
@@ -288,7 +259,7 @@ export default function FavoritesScreen() {
 
         </View>
 
-        {/* FAVORITOS */}
+        
         <View style={{width: '100%', display: 'flex', justifyContent:'center', alignItems: 'center'}}>
           <FlatList
             data={favorites}
@@ -328,8 +299,6 @@ export default function FavoritesScreen() {
           
         </View>
 
-        {/* LIMPAR */}
-
         <View
           style={{
             alignItems: "center",
@@ -346,9 +315,7 @@ export default function FavoritesScreen() {
             <Text
               style={{
                 color: theme.text,
-
-                textDecorationLine:
-                  "underline",
+                textDecorationLine: "underline",
               }}
             >
               Limpar preferências

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { saveUser, loadUser } from "../storage/userStorage";
+import { saveUser, loadUser} from "../storage/userStorage";
 
 type UserContextType = {
     username: string;
@@ -10,54 +10,63 @@ type UserContextType = {
         username: string,
         treatment: string
     ) => Promise<void>;
+
+    loadProfile: () => Promise<void>;
 };
 
-const UserContext = createContext<UserContextType>({} as UserContextType);
+
+export const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export function UserProvider({children,}: {children: React.ReactNode;}) {
-
+    
     const [username, setUsername] = useState("");
+
     const [treatment, setTreatment] = useState("Sr.");
 
-    useEffect(() => {
+    async function loadProfile() {
 
-        async function load() {
+        const prefs =await loadUser();
 
-            const prefs = await loadUser();
+        if (prefs) {
+            setUsername(prefs.username);
+            setTreatment(prefs.treatment);
 
-            if(prefs){
-                setUsername(prefs.username);
-    
-                setTreatment(prefs.treatment);
-            }
+        } else {
+            setUsername("");
+            setTreatment("Sr.");
 
         }
-
-        load();
-
-    }, []);
+    }
 
     async function saveProfile(newUsername: string, newTreatment: string) {
 
-        await saveUser( username, treatment);
+        await saveUser(newUsername, newTreatment);
 
         setUsername(newUsername);
+
         setTreatment(newTreatment);
     }
 
+    useEffect(() => {
+
+        loadProfile();
+
+    }, []);
+
     return (
+
         <UserContext.Provider
             value={{
                 username,
                 treatment,
                 saveProfile,
+                loadProfile,
             }}
         >
-            {children}
-        </UserContext.Provider>
-    );
-}
 
-export function useUser() {
-    return useContext(UserContext);
+            {children}
+
+        </UserContext.Provider>
+
+    );
 }

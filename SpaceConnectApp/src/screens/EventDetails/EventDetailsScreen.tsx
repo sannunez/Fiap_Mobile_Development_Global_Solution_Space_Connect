@@ -173,11 +173,8 @@ export default function EventDetailsScreen() {
                         style={{
                             marginTop: 30,
                             padding: 15,
-
                             borderRadius: 10,
-
                             alignItems: "center",
-
                             backgroundColor: "#1E88E5",
                         }}
                     >

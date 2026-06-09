@@ -12,12 +12,13 @@ export default function RootNavigator() {
 
   useEffect(() => {
     async function check() {
-      const cached = await loadWeather("last-weather");
+        const cached = await loadWeather("last-weather");
 
-      setInitialRoute(cached ? "Tabs" : "UserScreen");
+        setInitialRoute(cached ? "Tabs" : "UserScreen");
     }
 
     check();
+    
   }, []);
 
   if (!initialRoute) return null;
