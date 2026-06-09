@@ -72,7 +72,7 @@ export default function BarCharComp({data} : BarCharProps){
                     />
                 </Pressable>
 
-                    <Text style={{fontSize: 18, fontWeight: 500, color: theme.text}}>{currentMetric.label}</Text>
+                    <Text style={{fontSize: 18, fontWeight: "500", color: theme.text}}>{currentMetric.label}</Text>
 
                 <Pressable onPress={nextMetric}>
                     <Image

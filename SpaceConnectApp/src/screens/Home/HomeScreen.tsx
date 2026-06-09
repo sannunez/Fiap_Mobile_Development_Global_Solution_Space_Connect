@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { View, ScrollView, FlatList, Text } from "react-native";
 
-import BarCharComp from "../../components/Barchart";
-import DayChart from "../../components/DayChart";
+import BarCharComp from "../../components/barchart";
+import DayChart from "../../components/dayChart";
 import EarthNewsCard from "../../components/EarthNewscard";
 
 import { useTheme } from "../../hooks/useTheme";

@@ -67,7 +67,7 @@ export default function DayChart({data, rainChance, location} : dayChartProps){
                 }}>
 
             <View style={{display: 'flex', alignItems: 'center'}}>
-                <Text style={{fontSize: 18, marginBottom: 2, fontWeight: 500, color: "gray"}}>{location} - {formattedDate}</Text>
+                <Text style={{fontSize: 18, marginBottom: 2, fontWeight: "500", color: "gray"}}>{location} - {formattedDate}</Text>
             </View>
 
             <View style={{
@@ -107,9 +107,9 @@ export default function DayChart({data, rainChance, location} : dayChartProps){
 
                 <View style={{display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center'}}>
                     <View>
-                        <Text style={{fontWeight: 400, color: 'gray', fontSize: 12}}>Chuva: {rainChance}%</Text>
-                        <Text style={{fontWeight: 400, color: 'gray', fontSize: 12}}>Umidade: {data.humidity}%</Text>
-                        <Text style={{fontWeight: 400, color: 'gray', fontSize: 12}}>Vento: {data.wind}km/h</Text>
+                        <Text style={{fontWeight: "400", color: 'gray', fontSize: 12}}>Chuva: {rainChance}%</Text>
+                        <Text style={{fontWeight: "400", color: 'gray', fontSize: 12}}>Umidade: {data.humidity}%</Text>
+                        <Text style={{fontWeight: "400", color: 'gray', fontSize: 12}}>Vento: {data.wind}km/h</Text>
                     </View>
 
                     <View>
@@ -134,7 +134,7 @@ export default function DayChart({data, rainChance, location} : dayChartProps){
                 
             </View>
             <View style={{display: 'flex', alignItems: 'center'}}>
-                <Text style={{fontSize: 12, marginTop:5 ,fontWeight: 400, color: "gray", fontStyle: "italic", textAlign: "center"}}>
+                <Text style={{fontSize: 12, marginTop:5 ,fontWeight: "400", color: "gray", fontStyle: "italic", textAlign: "center"}}>
                     {message}
                 </Text>
             </View>

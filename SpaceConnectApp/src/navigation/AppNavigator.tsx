@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BlurView } from "expo-blur";
-import { Image } from "react-native";
+import { Image, Platform, View } from "react-native";
 
 import HomeScreen from "../screens/Home/HomeScreen";
 import ListScreen from "../screens/List/ListScreen";
@@ -72,25 +72,16 @@ export default function AppNavigator() {
                         ? `${route.name} • ${treatment} ${username}`
                         : route.name,
 
-                tabBarBackground: () => (
-
-                    <BlurView
-                        intensity={
-                            darkMode
-                                ? 60
-                                : 90
-                        }
-                        tint={
-                            darkMode
-                                ? "dark"
-                                : "light"
-                        }
-                        style={{
-                            flex: 1,
-                        }}
-                    />
-
-                ),
+                tabBarBackground: () =>
+                    Platform.OS === "web" ? (
+                        <View style={{ flex: 1, backgroundColor: theme.card }} />
+                    ) : (
+                        <BlurView
+                            intensity={darkMode ? 60 : 90}
+                            tint={darkMode ? "dark" : "light"}
+                            style={{ flex: 1 }}
+                        />
+                    ),
 
                 tabBarStyle: {
                     position: "absolute",

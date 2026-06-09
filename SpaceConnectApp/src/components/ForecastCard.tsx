@@ -57,7 +57,7 @@ export default function ForecastCard({item,}: ForecastCardProps) {
 
                 }}
             >
-                <Text style={{color: "gray", fontWeight: 500, fontSize: 16, marginBottom: 5}}>
+                <Text style={{color: "gray", fontWeight: "500", fontSize: 16, marginBottom: 5}}>
                     {getWeekDay(item.date).toUpperCase()} - {getFormatDate(item.date)}
                 </Text>
 
@@ -68,11 +68,11 @@ export default function ForecastCard({item,}: ForecastCardProps) {
                     gap: 50
                 }}>
                     <View style={{gap: 5}}>
-                        <Text style={{color: "gray", fontWeight: 400}}>
+                        <Text style={{color: "gray", fontWeight: "400"}}>
                             Máx: {item.maxTemp}°C
                         </Text>
 
-                        <Text  style={{color: "gray", fontWeight: 400}}>
+                        <Text  style={{color: "gray", fontWeight: "400"}}>
                             Mín: {item.minTemp}°C
                         </Text>
                     </View>
@@ -80,11 +80,11 @@ export default function ForecastCard({item,}: ForecastCardProps) {
                     <View style={{backgroundColor: "#e6e6e6", width: 2, height: 50, borderRadius: 5}}/>
 
                     <View style={{gap: 5}}>
-                        <Text  style={{color: "gray", fontWeight: 400}}>
+                        <Text  style={{color: "gray", fontWeight: "400"}}>
                             Chuva: {item.rainChance}%
                         </Text>
 
-                        <Text  style={{color: "gray", fontWeight: 400}}>
+                        <Text  style={{color: "gray", fontWeight: "400"}}>
                             Vento: {item.wind} km/h
                         </Text>
                     </View>
