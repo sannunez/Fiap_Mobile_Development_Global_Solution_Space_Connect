@@ -7,8 +7,7 @@ export async function saveFavorite(news: EarthNews) {
 
     const stored = await AsyncStorage.getItem(STORAGE_KEY);
 
-    const favorites: EarthNews[] =
-        stored ? JSON.parse(stored) : [];
+    const favorites: EarthNews[] = stored ? JSON.parse(stored) : [];
 
     const alreadyExists = favorites.some(
         item => item.id === news.id

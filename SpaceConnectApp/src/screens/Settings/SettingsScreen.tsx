@@ -68,9 +68,7 @@ export default function SettingsScreen(){
                     marginLeft: 10
                 }}
             >
-                <Pressable onPress={confirmClearPreferences}>
-                    <Text>Limpar preferências</Text>
-                </Pressable>
+
             </View>
         </View>
     )

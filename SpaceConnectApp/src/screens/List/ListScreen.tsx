@@ -112,6 +112,7 @@ export default function ListScreen() {
                                 value={search}
                                 onChangeText={setSearch}
                                 style={{
+                                    width: 350,
                                     margin: 10,
                                     backgroundColor: "#f5f5f5",
                                     borderRadius: 8,

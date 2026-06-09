@@ -20,6 +20,7 @@ export default function HomeScreen() {
     const [currentDay, setCurrentDay] = useState<any>(null);
 
     const [news, setNews] = useState<EarthNews[]>([]);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         async function loadCache() {
@@ -37,17 +38,27 @@ export default function HomeScreen() {
 
     useEffect(() => {
 
-    async function loadNews() {
+        async function loadNews() {
 
-        const response = await getEarthNews();
+            try {
 
-        setNews(response);
+                const data = await getEarthNews();
 
-    }
+                setNews(data);
 
-    loadNews();
+            } catch (err) {
+
+                if (err instanceof Error) {
+                    setError(err.message);
+                }
+
+            }
+        }
+
+        loadNews();
 
     }, []);
+
     return (
         <ScrollView
             style={{
@@ -88,6 +99,19 @@ export default function HomeScreen() {
                     }}
                 >
 
+                {
+                    error !== "" && (
+                        <Text
+                            style={{
+                                color: "red",
+                                marginVertical: 10,
+                            }}
+                        >
+                            {error}
+                        </Text>
+                    )
+                }
+                
                 <FlatList
                     horizontal
                     data={news}

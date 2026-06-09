@@ -4,7 +4,7 @@ import { loadWeather } from "../storage/weatherServiceStorage";
 
 import AppNavigator from "./AppNavigator";
 import UserScreen from "../screens/User/UserScreen";
-
+import EventDetailsScreen from "../screens/EventDetails/EventDetailsScreen";
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
@@ -24,11 +24,9 @@ export default function RootNavigator() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRoute}>
-
       <Stack.Screen name="UserScreen" component={UserScreen} />
-
       <Stack.Screen name="Tabs" component={AppNavigator} />
-
+      <Stack.Screen name="EventDetails" component={EventDetailsScreen}/>
     </Stack.Navigator>
   );
 }
