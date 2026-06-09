@@ -5,15 +5,9 @@ const TREATMENT_KEY = "@treatment";
 
 export async function saveUserPreferences(username: string,treatment: string) {
 
-    await AsyncStorage.setItem(
-        USERNAME_KEY,
-        username
-    );
+    await AsyncStorage.setItem(USERNAME_KEY, username);
 
-    await AsyncStorage.setItem(
-        TREATMENT_KEY,
-        treatment
-    );
+    await AsyncStorage.setItem(TREATMENT_KEY,treatment);
 }
 
 export async function getUserPreferences() {

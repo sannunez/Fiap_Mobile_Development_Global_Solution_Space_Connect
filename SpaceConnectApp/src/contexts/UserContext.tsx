@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { getUserPreferences, saveUserPreferences } from "../services/userPreferencesService";
+import { saveUser, loadUser } from "../storage/userStorage";
 
 type UserContextType = {
     username: string;
@@ -16,19 +16,20 @@ const UserContext = createContext<UserContextType>({} as UserContextType);
 
 export function UserProvider({children,}: {children: React.ReactNode;}) {
 
-    const [username, setUsername] =useState("");
-
-    const [treatment, setTreatment] =useState("Sr.");
+    const [username, setUsername] = useState("");
+    const [treatment, setTreatment] = useState("Sr.");
 
     useEffect(() => {
 
         async function load() {
 
-            const prefs =await getUserPreferences();
+            const prefs = await loadUser();
 
-            setUsername(prefs.username);
-
-            setTreatment(prefs.treatment);
+            if(prefs){
+                setUsername(prefs.username);
+    
+                setTreatment(prefs.treatment);
+            }
 
         }
 
@@ -38,10 +39,9 @@ export function UserProvider({children,}: {children: React.ReactNode;}) {
 
     async function saveProfile(newUsername: string, newTreatment: string) {
 
-        await saveUserPreferences(newUsername, newTreatment);
+        await saveUser( username, treatment);
 
         setUsername(newUsername);
-
         setTreatment(newTreatment);
     }
 

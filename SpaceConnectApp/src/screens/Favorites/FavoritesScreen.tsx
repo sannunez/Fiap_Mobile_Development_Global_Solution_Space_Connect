@@ -289,43 +289,44 @@ export default function FavoritesScreen() {
         </View>
 
         {/* FAVORITOS */}
+        <View style={{width: '100%', display: 'flex', justifyContent:'center', alignItems: 'center'}}>
+          <FlatList
+            data={favorites}
 
-        <FlatList
-          data={favorites}
+            keyExtractor={
+              item => item.id
+            }
 
-          keyExtractor={
-            item => item.id
-          }
+            renderItem={({ item }) => (
+              <EarthNewsCard
+                news={item}
+              />
+            )}
 
-          renderItem={({ item }) => (
-            <EarthNewsCard
-              news={item}
-            />
-          )}
+            ListEmptyComponent={
 
-          ListEmptyComponent={
-
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                paddingVertical: 30,
-              }}
-            >
-
-              <Text
+              <View
                 style={{
-                  fontSize: 16,
-                  color: "gray",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingVertical: 30,
                 }}
               >
-                Nenhuma notícia favoritada
-              </Text>
 
-            </View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: "gray",
+                  }}
+                >
+                  Nenhuma notícia favoritada
+                </Text>
 
-          }
-        />
+              </View>
+            }
+          />
+          
+        </View>
 
         {/* LIMPAR */}
 

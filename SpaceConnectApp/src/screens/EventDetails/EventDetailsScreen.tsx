@@ -5,14 +5,17 @@ import { useRoute } from "@react-navigation/native";
 import { Linking } from "react-native";
 
 import { EarthNews } from "../../types/EarthNews";
+import { useTheme } from "../../hooks/useTheme";
 
 export default function EventDetailsScreen() {
+    const {theme} = useTheme();
 
     const route = useRoute();
 
     const { event } = route.params as {
         event: EarthNews;
     };
+
 
     const recommendations = {
 
@@ -55,24 +58,23 @@ export default function EventDetailsScreen() {
     };
 
     const categoryLinks: Record<string, string> = {
-
         Wildfires:
-            "https://earthobservatory.nasa.gov/topic/wildfires",
+            "https://disasters.nasa.gov/what-we-do/disasters/fires",
 
         Floods:
-            "https://earthobservatory.nasa.gov/topic/floods",
-
-        Volcanoes:
-            "https://earthobservatory.nasa.gov/topic/volcanoes",
+            "https://disasters.nasa.gov/what-we-do/disasters/floods",
 
         Drought:
-            "https://earthobservatory.nasa.gov/topic/drought",
-
-        Landslides:
-            "https://earthobservatory.nasa.gov/topic/landslides",
+            "https://earthobservatory.nasa.gov/topic/Drought",
 
         "Severe Storms":
-            "https://earthobservatory.nasa.gov/topic/storms",
+            "https://disasters.nasa.gov",
+
+        Volcanoes:
+            "https://earthobservatory.nasa.gov",
+
+        Landslides:
+            "https://disasters.nasa.gov",
 
         "Sea and Lake Ice":
             "https://earthobservatory.nasa.gov/topic/sea-ice",
@@ -92,7 +94,9 @@ export default function EventDetailsScreen() {
 
         <ScrollView
             contentContainerStyle={{
+                flex: 1,
                 padding: 20,
+                backgroundColor: theme.background,
             }}
         >
 
@@ -101,6 +105,7 @@ export default function EventDetailsScreen() {
                     fontSize: 28,
                     fontWeight: "bold",
                     marginBottom: 10,
+                    color: theme.text
                 }}
             >
                 {event.title}
@@ -119,6 +124,7 @@ export default function EventDetailsScreen() {
                 style={{
                     fontSize: 16,
                     marginTop: 10,
+                    color: theme.text
                 }}
             >
                 Data:{" "}
@@ -132,6 +138,7 @@ export default function EventDetailsScreen() {
                     marginTop: 25,
                     fontSize: 22,
                     fontWeight: "bold",
+                    color: theme.text
                 }}
             >
                 Recomendações
@@ -146,6 +153,7 @@ export default function EventDetailsScreen() {
                             style={{
                                 marginTop: 10,
                                 fontSize: 16,
+                                color: theme.text
                             }}
                         >
                             • {item}
